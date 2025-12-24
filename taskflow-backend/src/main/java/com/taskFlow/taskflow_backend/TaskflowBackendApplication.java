@@ -10,6 +10,4 @@ public class TaskflowBackendApplication {
 		SpringApplication.run(TaskflowBackendApplication.class, args);
 	}
 
-
-
 }

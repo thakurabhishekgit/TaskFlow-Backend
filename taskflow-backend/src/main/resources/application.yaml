@@ -23,5 +23,9 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
-
+devtools:
+  restart:
+    enabled: true
+  livereload:
+    enabled: true
 
