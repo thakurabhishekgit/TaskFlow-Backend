@@ -24,7 +24,7 @@ import java.util.UUID;
 public class User {
     @Id
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
-    private UUID id;
+    private UUID user_id;
 
     @NotBlank(message = "Username cannot be blank")
     @NotNull
