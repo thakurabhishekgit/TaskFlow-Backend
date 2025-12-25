@@ -95,11 +95,10 @@ public class userServiceImpl implements userService {
         return userDTO;
     }
 
-    public userDTO deleteUser(UUID userId) {
+    public void deleteUser(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         userRepository.delete(user);
-        return null;
     }
 
 }

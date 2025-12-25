@@ -14,4 +14,6 @@ public interface userService {
 
     userDTO loginUser(String email, String password);
 
+    void deleteUser(UUID userId);
+
 }
