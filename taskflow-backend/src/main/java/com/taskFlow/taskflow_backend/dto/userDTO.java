@@ -1,5 +1,6 @@
 package com.taskFlow.taskflow_backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taskFlow.taskflow_backend.model.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,7 +32,11 @@ public class userDTO {
     private String password;
     private UserRole userRole;
     private List<taskDTO.TaskSummaryDTO> assignedTasks = new ArrayList<>();
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
 
     // ===============================

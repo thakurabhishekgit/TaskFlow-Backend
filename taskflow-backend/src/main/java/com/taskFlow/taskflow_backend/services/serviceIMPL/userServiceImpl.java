@@ -37,14 +37,15 @@ public class userServiceImpl implements userService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setUserRole(userDTO.getUserRole());
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUpdatedAt(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        user.setCreatedAt(now);
+        user.setUpdatedAt(now);
 
         // JWTconfig jwtconfig = new JWTconfig();
         // String token = jwtconfig.generateToken(user.getEmail());
         userRepository.save(user);
 
-        return userDTO;
+        return convertToDTO(user);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class userServiceImpl implements userService {
         userDTO.setUserRole(user.getUserRole());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
-        return userDTO;
+        return convertToDTO(user);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class userServiceImpl implements userService {
         userDTO.setUserRole(user.getUserRole());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
-        return userDTO;
+        return convertToDTO(user);
     }
 
     @Override
@@ -93,13 +94,38 @@ public class userServiceImpl implements userService {
 
         userRepository.save(user);
 
-        return userDTO;
+        return convertToDTO(user);
     }
 
     public void deleteUser(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         userRepository.delete(user);
+    }
+
+    userDTO convertToDTO(User user) {
+        userDTO userDTO = new userDTO();
+        userDTO.setUserId(user.getUserId());
+        userDTO.setName(user.getName());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setUserRole(user.getUserRole());
+        userDTO.setCreatedAt(user.getCreatedAt());
+        userDTO.setUpdatedAt(user.getUpdatedAt());
+        // if (user.getAssignedTasks() != null) {
+        // // Convert assigned tasks to DTOs if necessary
+        // // userDTO.setAssignedTasks( ... );
+        // List<taskDTO.TaskSummaryDTO> taskDTOs = user.getAssignedTasks().stream()
+        // .map(task -> {
+        // taskDTO.TaskSummaryDTO taskSummaryDTO = new taskDTO.TaskSummaryDTO();
+        // taskSummaryDTO.setTaskId(task.getTaskId());
+        // taskSummaryDTO.setTitle(task.getTitle());
+        // taskSummaryDTO.setStatus(task.getStatus());
+        // return taskSummaryDTO;
+        // })
+        // .collect(Collectors.toList());
+        // }
+        return userDTO;
     }
 
 }

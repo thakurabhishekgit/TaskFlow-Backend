@@ -28,6 +28,7 @@ public class User {
 
     @NotBlank(message = "Username cannot be blank")
     @NotNull
+    @Size(min = 3, max = 150)
     private String name;
 
     @Email
@@ -38,7 +39,6 @@ public class User {
 
     @NotNull
     @NotBlank(message = "password cannot be blank")
-    @Size(min = 4, max = 15)
     private String password;
 
     @Enumerated(EnumType.STRING)
