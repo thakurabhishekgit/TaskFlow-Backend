@@ -1,5 +1,6 @@
 package com.taskFlow.taskflow_backend.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.taskFlow.taskflow_backend.dto.userDTO;
@@ -13,6 +14,8 @@ public interface userService {
     userDTO updateUser(UUID userId, userDTO userDTO);
 
     userDTO loginUser(String email, String password);
+
+    List<userDTO> getAllUsers();
 
     void deleteUser(UUID userId);
 

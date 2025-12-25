@@ -8,6 +8,7 @@ import com.taskFlow.taskflow_backend.services.userService;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -90,7 +91,8 @@ public class userServiceImpl implements userService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setUserRole(userDTO.getUserRole());
-        user.setUpdatedAt(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        user.setUpdatedAt(now);
 
         userRepository.save(user);
 
@@ -101,6 +103,12 @@ public class userServiceImpl implements userService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         userRepository.delete(user);
+    }
+
+    public List<userDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 
     userDTO convertToDTO(User user) {
