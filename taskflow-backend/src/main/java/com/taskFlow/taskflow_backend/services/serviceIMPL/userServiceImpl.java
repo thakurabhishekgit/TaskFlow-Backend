@@ -7,6 +7,7 @@ import com.taskFlow.taskflow_backend.services.userService;
 
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,11 @@ import org.springframework.stereotype.Service;
 public class userServiceImpl implements userService {
 
     private final userRepositoty userRepository;
-    private final User user;
+
     private final PasswordEncoder passwordEncoder;
 
-    public userServiceImpl(userRepositoty userRepository, User user, PasswordEncoder passwordEncoder) {
+    public userServiceImpl(userRepositoty userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.user = user;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -31,13 +31,14 @@ public class userServiceImpl implements userService {
         if (userRepository.findByEmail(userDTO.getEmail()) != null) {
             throw new RuntimeException("Email already exists");
         }
+        User user = new User();
         // Additional registration logic (e.g., hashing password) can be added here
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setUserRole(userDTO.getUserRole());
-        user.setCreatedAt(userDTO.getCreatedAt());
-        user.setUpdatedAt(userDTO.getUpdatedAt());
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
 
         // JWTconfig jwtconfig = new JWTconfig();
         // String token = jwtconfig.generateToken(user.getEmail());
@@ -88,7 +89,7 @@ public class userServiceImpl implements userService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setUserRole(userDTO.getUserRole());
-        user.setUpdatedAt(userDTO.getUpdatedAt());
+        user.setUpdatedAt(LocalDateTime.now());
 
         userRepository.save(user);
 

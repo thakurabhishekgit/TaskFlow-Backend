@@ -22,7 +22,8 @@ public class Task {
 
     @Id
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
+
     private UUID taskId;
 
     @NotBlank(message = "taskTitle cannot be blank")
@@ -46,7 +47,7 @@ public class Task {
     private User assignedTo;
 
     @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
     @ManyToOne

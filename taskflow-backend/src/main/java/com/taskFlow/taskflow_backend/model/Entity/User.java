@@ -22,13 +22,12 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id", columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID userId;
 
     @NotBlank(message = "Username cannot be blank")
     @NotNull
-    @Size(min = 3, max = 15)
     private String name;
 
     @Email

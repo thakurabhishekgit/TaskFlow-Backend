@@ -4,6 +4,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -28,8 +29,8 @@ public class Team {
 
     @Id
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
-    @GeneratedValue
-    private UUID team_id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID teamId;
 
     @NotBlank(message = "Team name cannot be blank")
     @NotNull

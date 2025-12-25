@@ -32,7 +32,7 @@ public class userController {
     @Autowired
     private final userService userService;
 
-    @PostMapping("/register")
+    @PostMapping("/registerUser")
     public ResponseEntity<TokenWithUserRequest> registerUser(@Valid @RequestBody userDTO userDTO) {
         userDTO registeredUser = userService.registerUser(userDTO);
         String token = JWTconfig.generateToken(registeredUser.getEmail());
