@@ -3,6 +3,7 @@ package com.taskFlow.taskflow_backend.model.Entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -27,6 +28,7 @@ public class Team {
 
     @Id
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
+    @GeneratedValue
     private UUID team_id;
 
     @NotBlank(message = "Team name cannot be blank")
@@ -34,7 +36,7 @@ public class Team {
     private String teamName;
 
     @ManyToOne
-    @JoinColumn(name = "created_by")
+    @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)

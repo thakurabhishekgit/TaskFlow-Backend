@@ -1,7 +1,10 @@
 package com.taskFlow.taskflow_backend.model.Entity;
 
+import java.util.UUID;
+
 import com.taskFlow.taskflow_backend.model.enums.TeamRole;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,18 +27,18 @@ import lombok.NoArgsConstructor;
 public class TeamMembers {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id", columnDefinition = "uuid", nullable = false, updatable = false)
+    private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "team_id", nullable = false)
     private Team team;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Enumerated(EnumType.STRING)
     private TeamRole roleInTeam;
-
 }

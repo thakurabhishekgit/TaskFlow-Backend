@@ -1,6 +1,5 @@
 package com.taskFlow.taskflow_backend.model.Entity;
 
-
 import com.taskFlow.taskflow_backend.model.enums.TaskPriority;
 import com.taskFlow.taskflow_backend.model.enums.TaskStatus;
 import jakarta.persistence.*;
@@ -23,16 +22,17 @@ public class Task {
 
     @Id
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)
+    @GeneratedValue
     private UUID taskId;
 
     @NotBlank(message = "taskTitle cannot be blank")
     @NotNull
-    @Size(min = 3 , max = 15)
+    @Size(min = 3, max = 15)
     private String taskTitle;
 
     @NotBlank(message = "taskDescription cannot be blank")
     @NotNull
-    @Size(min = 3 , max = 150)
+    @Size(min = 3, max = 150)
     private String taskDescription;
 
     @Enumerated(EnumType.STRING)
@@ -55,6 +55,5 @@ public class Task {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
 
 }
