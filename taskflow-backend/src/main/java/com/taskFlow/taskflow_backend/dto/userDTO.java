@@ -5,22 +5,42 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
  * This file contains all User-related DTOs.
  * Grouped intentionally to keep learning simple and organized.
  */
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class userDTO {
+    private UUID userId;
+    private String name;
+    private String email;
+    private String password;
+    private UserRole userRole;
+    private List<taskDTO.TaskSummaryDTO> assignedTasks = new ArrayList<>();
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     // ===============================
     // 1️⃣ USER RESPONSE DTO
     // Used for GET /users/me, GET /users/{id}
     // ===============================
     @Data
+    @Getter
+    @Setter
     public static class UserResponseDTO {
         private UUID userId;
         private String name;
