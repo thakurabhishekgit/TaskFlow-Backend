@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,6 +45,7 @@ public class userController {
     }
 
     @PostMapping("/loginUser")
+
     public ResponseEntity<TokenWithUserRequest> loginUser(@Valid @RequestBody UserLoginRequestDTO loginRequest) {
         userDTO loggedInUser = userService.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
         if (loggedInUser == null) {
@@ -83,7 +85,7 @@ public class userController {
     @PutMapping("updateUser/{userId}")
     public ResponseEntity<userDTO> updateUser(@Valid @PathVariable UUID userId, @RequestBody userDTO userDTO,
             @RequestHeader("Authorization") String authHeader) {
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if (authHeader == null) {
             return ResponseEntity.status(401).build(); // Unauthorized
         }
         userDTO updatedUser = userService.updateUser(userId, userDTO);
