@@ -2,7 +2,9 @@ package com.taskFlow.taskflow_backend.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +13,19 @@ import java.util.UUID;
  * All Team-related DTOs grouped in one file.
  * Clean, backend-correct, interview-friendly.
  */
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class teamDTO {
+
+    private UUID teamId;
+
+    private String teamName;
+
+    private userDTO createdBy;
+
+    private List<taskDTO> task;
 
     // ===============================
     // 1️⃣ TEAM CREATE REQUEST DTO
