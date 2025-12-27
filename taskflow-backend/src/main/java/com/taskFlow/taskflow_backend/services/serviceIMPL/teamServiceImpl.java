@@ -104,7 +104,7 @@ public class teamServiceImpl implements teamService {
         Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new RuntimeException("Team not found"));
 
-        TeamMembers adminMembership = teamRepository.findByTeam_TeamIdAndUser_UserId(teamId, adminUserId)
+        TeamMembers adminMembership = teamMembersRepository.findByTeam_TeamIdAndUser_UserId(teamId, adminUserId)
                 .orElseThrow(() -> new RuntimeException("Not a team member"));
 
         if (adminMembership.getRoleInTeam() != TeamRole.LEAD) {
@@ -114,7 +114,7 @@ public class teamServiceImpl implements teamService {
         User userToAdd = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (teamRepository.existsByTeam_TeamIdAndUser_UserId(teamId, userToAdd.getUserId())) {
+        if (teamMembersRepository.existsByTeam_TeamIdAndUser_UserId(teamId, userToAdd.getUserId())) {
             throw new RuntimeException("User already in team");
         }
 
