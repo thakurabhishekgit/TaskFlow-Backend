@@ -28,10 +28,10 @@ public class teamcontroller {
     @Autowired
     private teamService teamService;
 
-    @PostMapping("/createTeam")
+    @PostMapping("/createTeam/{creatorUserId}")
     public ResponseEntity<teamDTO.TeamResponseDTO> createTeam(
-            @Valid @RequestBody teamDTO.CreateTeamRequestDTO request) {
-        teamDTO.TeamResponseDTO team = teamService.createTeam(request, null); // null for creatorUserId
+            @Valid @RequestBody teamDTO.CreateTeamRequestDTO request, @PathVariable UUID creatorUserId) {
+        teamDTO.TeamResponseDTO team = teamService.createTeam(request, creatorUserId); // null for creatorUserId
         return ResponseEntity.ok(team);
 
     }
