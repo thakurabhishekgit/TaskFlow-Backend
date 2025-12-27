@@ -43,8 +43,6 @@ public class userServiceImpl implements userService {
         user.setCreatedAt(now);
         user.setUpdatedAt(now);
 
-        // JWTconfig jwtconfig = new JWTconfig();
-        // String token = jwtconfig.generateToken(user.getEmail());
         userRepository.save(user);
 
         return convertToDTO(user);
