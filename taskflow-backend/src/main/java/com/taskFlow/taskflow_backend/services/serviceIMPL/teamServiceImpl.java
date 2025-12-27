@@ -96,7 +96,7 @@ public class teamServiceImpl implements teamService {
     // ADD USER TO TEAM (RBAC)
     // ===============================
     @Override
-    public void addUserToTeam(
+    public teamDTO.TeamResponseDTO addUserToTeam(
             UUID teamId,
             UUID adminUserId,
             teamDTO.AddUserToTeamRequestDTO request) {
@@ -124,6 +124,8 @@ public class teamServiceImpl implements teamService {
         member.setRoleInTeam(TeamRole.MEMBER);
 
         teamMembersRepository.save(member);
+
+        return mapToTeamResponse(team);
     }
 
     // ===============================

@@ -7,16 +7,16 @@ import com.taskFlow.taskflow_backend.dto.teamDTO;
 
 public interface teamService {
 
-    teamDTO.TeamResponseDTO createTeam(
-            teamDTO.CreateTeamRequestDTO request,
-            UUID creatorUserId);
+        teamDTO.TeamResponseDTO createTeam(
+                        teamDTO.CreateTeamRequestDTO request,
+                        UUID creatorUserId);
 
-    List<teamDTO.TeamSummaryDTO> getAllTeams();
+        List<teamDTO.TeamSummaryDTO> getAllTeams();
 
-    teamDTO.TeamResponseDTO getTeamById(UUID teamId);
+        teamDTO.TeamResponseDTO getTeamById(UUID teamId);
 
-    void addUserToTeam(
-            UUID teamId,
-            UUID adminUserId,
-            teamDTO.AddUserToTeamRequestDTO request);
+        teamDTO.TeamResponseDTO addUserToTeam(
+                        UUID teamId,
+                        UUID adminUserId,
+                        teamDTO.AddUserToTeamRequestDTO request);
 }
