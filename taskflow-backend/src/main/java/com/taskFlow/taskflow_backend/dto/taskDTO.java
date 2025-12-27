@@ -1,5 +1,7 @@
 package com.taskFlow.taskflow_backend.dto;
 
+import com.taskFlow.taskflow_backend.dto.teamDTO.TeamWithCreatorDTO;
+import com.taskFlow.taskflow_backend.dto.userDTO.UserSummaryDTO;
 import com.taskFlow.taskflow_backend.model.enums.TaskPriority;
 import com.taskFlow.taskflow_backend.model.enums.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
@@ -65,15 +67,9 @@ public class taskDTO {
         private TaskStatus status;
         private TaskPriority priority;
 
-        // Flattened fields (VERY IMPORTANT)
-        private UUID assignedUserId;
-        private String assignedUserName;
-
-        private UUID teamId;
-        private String teamName;
-
-        private UUID createdByUserId;
-        private String createdByUserName;
+        private TeamWithCreatorDTO team;
+        private UserSummaryDTO assignedTo;
+        private UserSummaryDTO createdBy;
 
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
@@ -90,5 +86,12 @@ public class taskDTO {
         private String taskTitle;
         private TaskStatus status;
         private TaskPriority priority;
+    }
+
+    @Data
+    public static class TeamWithCreatorDTO {
+        private UUID teamId;
+        private String teamName;
+        private UserSummaryDTO createdBy;
     }
 }

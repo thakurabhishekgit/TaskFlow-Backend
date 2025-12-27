@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
+import com.taskFlow.taskflow_backend.dto.userDTO.UserSummaryDTO;
+
 /**
  * All Team-related DTOs grouped in one file.
  * Clean, backend-correct, interview-friendly.
@@ -78,4 +80,12 @@ public class teamDTO {
         @NotNull
         private UUID userId;
     }
+
+    @Data
+    public static class TeamWithCreatorDTO {
+        private UUID teamId;
+        private String teamName;
+        private UserSummaryDTO createdBy;
+    }
+
 }

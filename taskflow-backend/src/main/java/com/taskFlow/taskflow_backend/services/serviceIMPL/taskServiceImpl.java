@@ -7,6 +7,9 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.taskFlow.taskflow_backend.dto.taskDTO;
+// import com.taskFlow.taskflow_backend.dto.taskDTO.TaskResponseDTO;
+// import com.taskFlow.taskflow_backend.dto.teamDTO.TeamWithCreatorDTO;
+import com.taskFlow.taskflow_backend.dto.userDTO.UserSummaryDTO;
 import com.taskFlow.taskflow_backend.model.Entity.Task;
 import com.taskFlow.taskflow_backend.model.Entity.Team;
 import com.taskFlow.taskflow_backend.model.Entity.TeamMembers;
@@ -142,18 +145,39 @@ public class taskServiceImpl implements taskService {
                 dto.setStatus(task.getStatus());
                 dto.setPriority(task.getPriority());
 
-                dto.setAssignedUserId(task.getAssignedTo().getUserId());
-                dto.setAssignedUserName(task.getAssignedTo().getName());
+                // ===== TEAM =====
+                taskDTO.TeamWithCreatorDTO teamDTO = new taskDTO.TeamWithCreatorDTO();
+                teamDTO.setTeamId(task.getTeam().getTeamId());
+                teamDTO.setTeamName(task.getTeam().getTeamName());
 
-                dto.setTeamId(task.getTeam().getTeamId());
-                dto.setTeamName(task.getTeam().getTeamName());
+                UserSummaryDTO teamCreator = new UserSummaryDTO();
+                teamCreator.setUserId(task.getTeam().getCreatedBy().getUserId());
+                teamCreator.setName(task.getTeam().getCreatedBy().getName());
+                teamCreator.setEmail(task.getTeam().getCreatedBy().getEmail());
 
-                dto.setCreatedByUserId(task.getCreatedBy().getUserId());
-                dto.setCreatedByUserName(task.getCreatedBy().getName());
+                teamDTO.setCreatedBy(teamCreator);
+                dto.setTeam(teamDTO);
+
+                // ===== ASSIGNED USER =====
+                UserSummaryDTO assignedTo = new UserSummaryDTO();
+                assignedTo.setUserId(task.getAssignedTo().getUserId());
+                assignedTo.setName(task.getAssignedTo().getName());
+                assignedTo.setEmail(task.getAssignedTo().getEmail());
+
+                dto.setAssignedTo(assignedTo);
+
+                // ===== CREATED BY =====
+                UserSummaryDTO createdBy = new UserSummaryDTO();
+                createdBy.setUserId(task.getCreatedBy().getUserId());
+                createdBy.setName(task.getCreatedBy().getName());
+                createdBy.setEmail(task.getCreatedBy().getEmail());
+
+                dto.setCreatedBy(createdBy);
 
                 dto.setCreatedAt(task.getCreatedAt());
                 dto.setUpdatedAt(task.getUpdatedAt());
 
                 return dto;
         }
+
 }

@@ -1,5 +1,6 @@
 package com.taskFlow.taskflow_backend.services.serviceIMPL;
 
+import com.taskFlow.taskflow_backend.dto.taskDTO;
 import com.taskFlow.taskflow_backend.dto.userDTO;
 import com.taskFlow.taskflow_backend.model.Entity.User;
 import com.taskFlow.taskflow_backend.respository.userRepositoty;
@@ -78,7 +79,7 @@ public class userServiceImpl implements userService {
         userDTO.setUserRole(user.getUserRole());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
-        return convertToDTO(user);
+        return convertToDTOForOneTime(user);
     }
 
     @Override
@@ -105,35 +106,51 @@ public class userServiceImpl implements userService {
         userRepository.delete(user);
     }
 
+    @Transactional
     public List<userDTO> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .toList();
     }
 
-    userDTO convertToDTO(User user) {
-        userDTO userDTO = new userDTO();
-        userDTO.setUserId(user.getUserId());
-        userDTO.setName(user.getName());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setUserRole(user.getUserRole());
-        userDTO.setCreatedAt(user.getCreatedAt());
-        userDTO.setUpdatedAt(user.getUpdatedAt());
-        // if (user.getAssignedTasks() != null) {
-        // // Convert assigned tasks to DTOs if necessary
-        // // userDTO.setAssignedTasks( ... );
-        // List<taskDTO.TaskSummaryDTO> taskDTOs = user.getAssignedTasks().stream()
-        // .map(task -> {
-        // taskDTO.TaskSummaryDTO taskSummaryDTO = new taskDTO.TaskSummaryDTO();
-        // taskSummaryDTO.setTaskId(task.getTaskId());
-        // taskSummaryDTO.setTitle(task.getTitle());
-        // taskSummaryDTO.setStatus(task.getStatus());
-        // return taskSummaryDTO;
-        // })
-        // .collect(Collectors.toList());
-        // }
-        return userDTO;
+    public userDTO convertToDTOForOneTime(User user) {
+
+        userDTO dto = new userDTO();
+        dto.setUserId(user.getUserId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setUserRole(user.getUserRole());
+        dto.setCreatedAt(user.getCreatedAt());
+        dto.setUpdatedAt(user.getUpdatedAt());
+
+        // 🔹 Map assigned tasks (SUMMARY ONLY)
+        if (user.getAssignedTasks() != null) {
+            List<taskDTO.TaskSummaryDTO> taskSummaries = user.getAssignedTasks().stream()
+                    .map(task -> {
+                        taskDTO.TaskSummaryDTO t = new taskDTO.TaskSummaryDTO();
+                        t.setTaskId(task.getTaskId());
+                        t.setTaskTitle(task.getTaskTitle());
+                        t.setStatus(task.getStatus());
+                        t.setPriority(task.getPriority());
+                        return t;
+                    })
+                    .toList();
+
+            dto.setAssignedTasks(taskSummaries);
+        }
+
+        return dto;
     }
 
+    public userDTO convertToDTO(User user) {
+        userDTO dto = new userDTO();
+        dto.setUserId(user.getUserId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setUserRole(user.getUserRole());
+        dto.setCreatedAt(user.getCreatedAt());
+        dto.setUpdatedAt(user.getUpdatedAt());
+
+        return dto;
+    }
 }

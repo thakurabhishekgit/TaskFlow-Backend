@@ -52,6 +52,7 @@ public class userDTO {
         private String email;
         private UserRole userRole;
         private LocalDateTime createdAt;
+        List<taskDTO.TaskResponseDTO> assignedTasks;
     }
 
     // ===============================
