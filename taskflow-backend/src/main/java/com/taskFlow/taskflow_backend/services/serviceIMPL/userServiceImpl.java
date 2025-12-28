@@ -56,6 +56,7 @@ public class userServiceImpl implements userService {
             throw new RuntimeException("Invalid email or password");
         }
         userDTO userDTO = new userDTO();
+
         userDTO.setUserId(user.getUserId());
         userDTO.setName(user.getName());
         userDTO.setEmail(user.getEmail());
