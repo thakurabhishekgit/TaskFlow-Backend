@@ -17,7 +17,7 @@ spring:
       hibernate:
         format_sql: true
 server:
-  port : 7777
+  port: 7777
 
 logging:
   level:
@@ -29,3 +29,20 @@ devtools:
   livereload:
     enabled: true
 
+    cache:
+    type: redis
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 60000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false

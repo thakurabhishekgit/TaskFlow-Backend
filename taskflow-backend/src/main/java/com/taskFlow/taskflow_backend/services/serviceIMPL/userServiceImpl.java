@@ -6,6 +6,7 @@ import com.taskFlow.taskflow_backend.model.Entity.User;
 import com.taskFlow.taskflow_backend.respository.userRepositoty;
 import com.taskFlow.taskflow_backend.services.userService;
 
+import jakarta.persistence.Cacheable;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
@@ -34,7 +35,6 @@ public class userServiceImpl implements userService {
             throw new RuntimeException("Email already exists");
         }
         User user = new User();
-        // Additional registration logic (e.g., hashing password) can be added here
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -67,6 +67,7 @@ public class userServiceImpl implements userService {
 
     @Override
     @Transactional
+    // @Cacheable(key = "#userId", value = "user" )
     public userDTO getUserById(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
@@ -120,8 +121,6 @@ public class userServiceImpl implements userService {
         dto.setUserRole(user.getUserRole());
         dto.setCreatedAt(user.getCreatedAt());
         dto.setUpdatedAt(user.getUpdatedAt());
-
-        // 🔹 Map assigned tasks (SUMMARY ONLY)
         if (user.getAssignedTasks() != null) {
             List<taskDTO.TaskSummaryDTO> taskSummaries = user.getAssignedTasks().stream()
                     .map(task -> {
