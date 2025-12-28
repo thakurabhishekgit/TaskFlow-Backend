@@ -6,7 +6,7 @@ import com.taskFlow.taskflow_backend.model.Entity.User;
 import com.taskFlow.taskflow_backend.respository.userRepositoty;
 import com.taskFlow.taskflow_backend.services.userService;
 
-import jakarta.persistence.Cacheable;
+import org.springframework.cache.annotation.Cacheable;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
@@ -67,8 +67,8 @@ public class userServiceImpl implements userService {
     }
 
     @Override
-    @Transactional
-    // @Cacheable(key = "#userId", value = "user" )
+    @Cacheable(value = "users", key = "#userId", unless = "#result == null")
+
     public userDTO getUserById(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));

@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id", columnDefinition = "uuid", updatable = false, nullable = false)

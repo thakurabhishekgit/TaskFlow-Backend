@@ -101,11 +101,27 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Redis starter
+		<!-- Redis starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency> -->
+		</dependency>
+
+		<!-- Ensure redis classes are present -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+		</dependency>
+
+		<!-- Jackson module for Java 8 Date/Time (LocalDateTime) -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
 
 		
 

@@ -1,6 +1,7 @@
 spring:
   application:
     name: taskflow-backend
+
   datasource:
     url: jdbc:postgresql://localhost:5432/taskflow
     username: postgres
@@ -13,27 +14,27 @@ spring:
       ddl-auto: update
     show-sql: true
     open-in-view: false
-    properties:
-      hibernate:
-        format_sql: true
-server:
-  port: 7777
+
+  cache:
+    type: redis
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000
+      database: 0
 
 logging:
   level:
-    org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.springframework.cache: TRACE
+    org.springframework.data.redis: DEBUG
+
+server:
+  port: 7777
+
 devtools:
   restart:
     enabled: true
   livereload:
     enabled: true
-
-  #   cache:
-  #   type: redis
-
-  # data:
-  #   redis:
-  #     host: localhost
-  #     port: 6379
-  #     timeout: 2000
