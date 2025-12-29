@@ -72,6 +72,8 @@ public class userServiceImpl implements userService {
     public userDTO getUserById(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        user = userRepository.findUserWithTasks(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with task"));
         userDTO userDTO = new userDTO();
         userDTO.setUserId(user.getUserId());
         userDTO.setName(user.getName());
@@ -79,6 +81,7 @@ public class userServiceImpl implements userService {
         userDTO.setUserRole(user.getUserRole());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
+        userDTO.setPassword(user.getPassword());
         return convertToDTOForOneTime(user);
     }
 
@@ -94,7 +97,6 @@ public class userServiceImpl implements userService {
         user.setUserRole(userDTO.getUserRole());
         LocalDateTime now = LocalDateTime.now();
         user.setUpdatedAt(now);
-
         userRepository.save(user);
 
         return convertToDTO(user);
@@ -118,6 +120,7 @@ public class userServiceImpl implements userService {
         userDTO dto = new userDTO();
         dto.setUserId(user.getUserId());
         dto.setName(user.getName());
+        dto.setPassword(user.getPassword());
         dto.setEmail(user.getEmail());
         dto.setUserRole(user.getUserRole());
         dto.setCreatedAt(user.getCreatedAt());
@@ -144,6 +147,7 @@ public class userServiceImpl implements userService {
         userDTO dto = new userDTO();
         dto.setUserId(user.getUserId());
         dto.setName(user.getName());
+        dto.setPassword(user.getPassword());
         dto.setEmail(user.getEmail());
         dto.setUserRole(user.getUserRole());
         dto.setCreatedAt(user.getCreatedAt());
